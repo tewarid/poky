@@ -57,6 +57,8 @@ MIRRORS_forcevariable = "git://.*/.* http://downloads.yoctoproject.org/mirror/so
 class Dependencies(OESelftestTestCase):
     def write_recipe(self, content):
         f = tempfile.NamedTemporaryFile(mode="wt", suffix=".bb")
+        while "_" in f.name:
+            f = tempfile.NamedTemporaryFile(mode="wt", suffix=".bb")
         f.write(content)
         f.flush()
         return f
