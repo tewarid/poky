@@ -362,7 +362,9 @@ def auto_shutdown():
     global singleton
     if singleton and singleton.process:
         singleton.process.terminate()
-        singleton.process.join()
+        singleton.process.join(15)
+        if singleton.process.exitcode is None:
+            logger.error("PRservice shutdown timed out")
         singleton = None
 
 def ping(host, port):
