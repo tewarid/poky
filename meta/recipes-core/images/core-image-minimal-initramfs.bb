@@ -22,7 +22,12 @@ IMAGE_LINGUAS = ""
 
 LICENSE = "MIT"
 
-IMAGE_FSTYPES = "${INITRAMFS_FSTYPES}"
+# Some BSPs use IMAGE_FSTYPES_<machine override> which would override
+# an assignment to IMAGE_FSTYPES so we need anon python
+python () {
+    d.setVar("IMAGE_FSTYPES", d.getVar("INITRAMFS_FSTYPES"))
+}
+
 inherit core-image
 
 IMAGE_ROOTFS_SIZE = "8192"
@@ -30,3 +35,4 @@ IMAGE_ROOTFS_EXTRA_SPACE = "0"
 
 # Use the same restriction as initramfs-module-install
 COMPATIBLE_HOST = '(x86_64.*|i.86.*|arm.*|aarch64.*)-(linux.*|freebsd.*)'
+
